@@ -32,6 +32,93 @@
         <script src="jquery.mobile-1.3.0.js"></script>
           <script src="js/my.js"></script>
         
+
+         <script type="text/javascript" charset="utf-8">
+
+             // Wait for Cordova to load
+             //
+             document.addEventListener("deviceready", onDeviceReady, false);
+
+             // Cordova is ready
+             //
+             function onDeviceReady() {
+                 alert('It works!');
+                 console.log("onDeviceReady. You should see this message in Visual Studio's output window.");
+
+                 var wID = navigator.accelerometer.watchAcceleration(onAccSuccess, onAccError, { frequency: 1000 });
+
+                 navigator.splashscreen.show();
+
+                 // navigator.camera.getPicture(onSuccess, onError, { quality: 50, destinationType: Camera.DestinationType.FILE_URI }); 
+
+                 $('#button').click(function () {
+                     navigator.notification.alert("You clicked me!", onButtonSuccess, "Click", "OK");
+                 });
+
+                 ////////////////////////////////////////////////////////////
+
+
+
+                 var element = document.getElementById('deviceProperties');
+
+                 element.innerHTML = 'Device Name: ' + device.name + '<br />' +
+                            'Device Cordova: ' + device.cordova + '<br />' +
+                            'Device Platform: ' + device.platform + '<br />' +
+                            'Device UUID: ' + device.uuid + '<br />' +
+                            'Device Model: ' + device.model + '<br />' +
+                            'Device Version: ' + device.version + '<br />';
+             }
+
+             function onAccSuccess(a) {
+                 $('#aX').html(a.x);
+                 $('#aY').html(a.y);
+                 $('#aZ').html(a.z);
+                 $('#aTime').html(a.timestamp);
+
+             }
+
+             function onAccError() {
+
+             }
+
+             function onSuccess(fileUri) {
+                 $('#imageuri').html(fileUri);
+
+             }
+
+             function onError() {
+
+             }
+
+             function onButtonSuccess() {
+                 $('#button').html('Clicked');
+
+             }
+
+    </script>
+
+
+         <script type="text/javascript">
+
+
+             $(function () {
+                 $('#savebutton').click(function () {
+                     window.localStorage.setItem("name", $('#name').val());
+                 });
+
+                 $('#newpage').live('pageshow', function () {
+                     var personName = windows.localStorage.getItem("name");
+                     if (personName.length > 0) {
+                         $('#name').val(personName);
+                     }
+                 });
+             });
+
+
+        </script>
+
+       
+
       <title>Envisage Web Services</title>
     </head>
     <body>
